@@ -50,7 +50,7 @@ const NewBlogPost = ({history,addBlogPost, nextId}) => {
         <form onSubmit ={handleSubmit}>
             <div style ={divStyles}>
                 <label style ={labelStyles}>Title</label>
-                <input style ={inputStyles} required type = "text" name ="title" placeholder ="enter title" onChange ={handleChange}></input>
+                <input style ={inputStyles} required type = "text" name ="title" value={formState.title}placeholder ="enter title" onChange ={handleChange}></input>
             </div>
             <div style ={divStyles} >
                 <label style ={labelStyles} >Category</label>
