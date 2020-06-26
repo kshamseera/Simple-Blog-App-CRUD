@@ -10,17 +10,61 @@ import Register from './components/Register'
 import Login from './components/Login'
 
 const App = () => {
-  const [blogPosts, setBlogPosts] = useState([])
   const[loggedInUser, setLoggedInUser] = useState(null)
+  const [blogPosts, setBlogPosts] = useState([])
+  
 
   useEffect(() => {
     setBlogPosts(blogData)
   },[])
 
+  useEffect(()=>{
+    //check local storage for a logged in user
+    const user = getUserFromLocalStorage();
+    user && setLoggedInUser(user)
+  },[])
+
+  //once user logged in it stores data in local storage
+  function setUserInLocalStorage(user) {
+    user ? localStorage.setItem("loggedInUser", user)
+    : localStorage.removeItem("loggedInUser")
+  }
+
+  // taking the data from local storage
+  function getUserFromLocalStorage(){
+    return localStorage.getItem("loggedInUser")
+  }
+
   function getPostFromId(id) {
     // console.log("id:",id)
     return blogPosts.find((post) => post._id === parseInt (id))
   }
+
+  //Register user (here set the redirection to home after register done.)
+  function handleRegister(user, history){
+    setLoggedInUser(user.username)
+    history.push("/")
+  }
+  //login user
+  function handleLogin(user,history){
+    setLoggedInUser(user.username)
+    setUserInLocalStorage(user.username)
+    history.push("/")
+  }
+
+  //logout user
+  function handleLogout(){
+    setLoggedInUser(null)
+    //clear data from localstorage
+    setUserInLocalStorage(null)
+  }
+
+  //generating new ids for the new post
+  function getNextId(){
+    const ids = blogPosts.map((post) => post._id)
+    return ids.sort()[ids.length-1]+1
+  }
+
   // add new post
   function addBlogPost(post) {
     setBlogPosts([...blogPosts, post])
@@ -38,27 +82,6 @@ const App = () => {
     const otherBlogPosts = blogPosts.filter((post) =>  post._id !== parseInt(updatedPost._id))
     setBlogPosts([...otherBlogPosts, updatedPost])
  }
-
-  //generating new ids for the new post
-  function getNextId(){
-    const ids = blogPosts.map((post) => post._id)
-    return ids.sort()[ids.length-1]+1
-  }
-  //logout user
-  function handleLogout(){
-    setLoggedInUser(null)
-  }
-
-  //Register user (here set the redirection to home after register done.)
-  function handleRegister(user, history){
-    setLoggedInUser(user.username)
-    history.push("/")
-  }
-  //login user
-  function handleLogin(user,history){
-    setLoggedInUser(user.username)
-    history.push("/")
-  }
 
   return (
 
