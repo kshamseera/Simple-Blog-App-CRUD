@@ -16,6 +16,11 @@ const BlogPost = ({history,post,showControls,deleteBlogPost}) => {
         deleteBlogPost(post._id)
         history.push("/")
     }
+    // handle edit in update button
+    function handleEdit(){
+        history.push(`/posts/edit/${post._id}`)
+    }
+
     // console.log("showControls: ",showControls)
     const{title, modified_date, category, content} = post
     return (
@@ -27,7 +32,13 @@ const BlogPost = ({history,post,showControls,deleteBlogPost}) => {
             <p>{category}</p>
             <p>{content}</p>
             {/* //if showControl is true show the button otherwise hide button */}
-            {showControls && <button onClick={handleDelete}>Delete</button>}
+            {showControls &&
+            <div> <button onClick={handleDelete}>Delete</button>
+            {/* //can link in another way as
+            // <Link to={`/posts/edit/${post._id}`}><button>Edit</button></Link> */}
+            { <button onClick ={handleEdit}>Edit</button>}
+            </div>
+            }
         </div>
      );
 }

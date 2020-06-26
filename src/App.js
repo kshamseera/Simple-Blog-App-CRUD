@@ -5,6 +5,7 @@ import Nav from './components/Nav'
 import BlogPosts from './components/BlogPosts'
 import BlogPost from './components/BlogPost'
 import NewBlogPost from './components/NewBlogPost'
+import EditBlogPost from './components/EditBlogPost'
 import Register from './components/Register'
 import Login from './components/Login'
 
@@ -31,6 +32,12 @@ const App = () => {
     const otherBlogPosts = blogPosts.filter((post) =>  post._id !== parseInt(id))
     setBlogPosts(otherBlogPosts);
   }
+//update post
+  function updateBlogPost(updatedPost){
+    //remove the post with and add new post with the same id
+    const otherBlogPosts = blogPosts.filter((post) =>  post._id !== parseInt(updatedPost._id))
+    setBlogPosts([...otherBlogPosts, updatedPost])
+ }
 
   //generating new ids for the new post
   function getNextId(){
@@ -67,6 +74,8 @@ const App = () => {
        <Route exact path="/posts/:id" render={(props) =>
        //before rendering blogpost it will execute getPostFromId from props. id will always get through  props.match.params,that is part of Route component
          <BlogPost {...props} post={getPostFromId(props.match.params.id)} showControls deleteBlogPost={deleteBlogPost} />}/>
+         <Route exact path ="/posts/edit/:id" render={(props) => 
+         <EditBlogPost {...props} post={getPostFromId(props.match.params.id)} updateBlogPost={updateBlogPost}/> }/>
          <Route exact path ="/register" render={(props)=> <Register {...props} handleRegister={handleRegister} />} />
          <Route exact path="/login" render={(props) => <Login {...props} handleLogin={handleLogin} />} />
     </Switch>
