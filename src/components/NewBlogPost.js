@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const NewBlogPost = ({history,addBlogPost, nextId}) => {
+const NewBlogPost = ({history, addBlogPost, nextId}) => {
     //styling
     const divStyles = {
         display:'grid',
