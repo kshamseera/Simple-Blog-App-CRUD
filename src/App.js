@@ -26,7 +26,7 @@ const App = () => {
 
   //once user logged in it stores data in local storage
   function setUserInLocalStorage(user) {
-    user ? localStorage.setItem("loggedInUser", user)
+    user ? localStorage.setItem("loggedInUser", user) //here loggedInUser is the state value
     : localStorage.removeItem("loggedInUser")
   }
 
