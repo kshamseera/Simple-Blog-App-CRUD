@@ -78,7 +78,7 @@ const App = () => {
   }
 //update post
   function updateBlogPost(updatedPost){
-    //remove the post with and add new post with the same id
+    //remove the post with the id and add new post with the same id
     const otherBlogPosts = blogPosts.filter((post) =>  post._id !== parseInt(updatedPost._id))
     setBlogPosts([...otherBlogPosts, updatedPost])
  }
